@@ -27,7 +27,7 @@ WHERE login_time > '18:00:00' AND success = FALSE;
 
 La siguiente captura muestra un fragmento de la salida generada por esta consulta:
 
-![Consulta de intentos fallidos fuera de horario](images/sql-after-hours.png)
+
 
 **Análisis:** La cláusula `WHERE` combina dos condiciones mediante el operador `AND`, lo que garantiza que **ambas** se cumplan simultáneamente. La primera condición, `login_time > '18:00:00'`, filtra los registros ocurridos después de las 18:00. La segunda, `success = FALSE`, aísla exclusivamente los intentos de autenticación fallidos. Esta correlación es un patrón estándar en la detección de ataques de fuerza bruta fuera del horario operativo.
 
@@ -45,7 +45,6 @@ WHERE login_date = '2022-05-09' OR login_date = '2022-05-08';
 
 La siguiente captura muestra un fragmento de la salida generada por esta consulta:
 
-![Consulta por fechas específicas](images/sql-specific-dates.png)
 
 **Análisis:** El operador `OR` permite evaluar múltiples condiciones de forma inclusiva: el registro se devuelve si cumple **al menos una** de ellas. En este caso, la consulta captura toda la actividad registrada el 8 o el 9 de mayo de 2022. En respuesta a incidentes, es una práctica habitual ampliar la ventana temporal de análisis para identificar indicadores de compromiso (IoC) que puedan preceder al evento principal.
 
@@ -63,7 +62,7 @@ WHERE NOT country LIKE 'MEX%';
 
 La siguiente captura muestra un fragmento de la salida generada por esta consulta:
 
-![Consulta excluyendo México](images/sql-not-mexico.png)
+
 
 **Análisis:** Esta consulta combina el operador `NOT` con la función de coincidencia de patrones `LIKE`. Dado que la columna `country` almacena la ubicación como `"MEX"` o `"MEXICO"`, el comodín `%` en el patrón `'MEX%'` captura cualquier cadena que comience con esas tres letras. Al anteponer `NOT`, se invierten los resultados, excluyendo todo registro de origen mexicano. Esta técnica es esencial cuando los datos presentan inconsistencias de formato y se requiere un filtrado robusto.
 
@@ -81,7 +80,7 @@ WHERE department = 'Marketing' AND office LIKE 'East-%';
 
 La siguiente captura muestra un fragmento de la salida generada por esta consulta:
 
-![Consulta de empleados en Marketing](images/sql-marketing-east.png)
+
 
 **Análisis:** La consulta emplea `AND` para aplicar dos filtros estrictos de forma simultánea. La condición `department = 'Marketing'` delimita el departamento objetivo. La condición `office LIKE 'East-%'` utiliza coincidencia de patrones para capturar todas las oficinas cuya designación comienza con `"East-"`, independientemente del número de habitación (por ejemplo, `East-170`, `East-320`). Esta segmentación precisa es fundamental para garantizar que los parches de seguridad se desplieguen únicamente en la infraestructura correcta.
 
@@ -99,7 +98,7 @@ WHERE department = 'Sales' OR department = 'Finance';
 
 La siguiente captura muestra un fragmento de la salida generada por esta consulta:
 
-![Consulta de empleados en Finanzas o Ventas](images/sql-finance-sales.png)
+
 
 **Análisis:** El operador `OR` evalúa cada registro de forma inclusiva, devolviéndolo si la columna `department` coincide con `"Sales"` **o** con `"Finance"`. Esto permite abarcar múltiples departamentos en una sola instrucción, eliminando la necesidad de ejecutar consultas independientes y reduciendo la complejidad operativa durante el despliegue de actualizaciones.
 
@@ -117,7 +116,7 @@ WHERE NOT department = 'Information Technology';
 
 La siguiente captura muestra un fragmento de la salida generada por esta consulta:
 
-![Consulta excluyendo TI](images/sql-not-it.png)
+
 
 **Análisis:** El operador `NOT` simplifica la lógica de exclusión. En lugar de enumerar todos los departamentos restantes con múltiples condiciones `OR`, se niega la única condición que se desea excluir. Esta práctica es más limpia, escalable y menos propensa a errores, especialmente en organizaciones con una gran cantidad de departamentos.
 
